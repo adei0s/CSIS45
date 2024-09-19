@@ -57,7 +57,7 @@ int main() {
     cout << "=========================" << endl;
 
     // check current holdings
-            for (int i=0; i<9; i++) {
+    for (int i=0; i<9; i++) {
         cout << i << " : " << names[i] << " : " << balance[i] << endl;
         sum += balance[i];
     }
