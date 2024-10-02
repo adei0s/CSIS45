@@ -6,26 +6,28 @@ using namespace std;
 
 // creating the container for our key/value pairs with arrays
 
-const int tableSize = 100;
+const int tableSize = 101;
 string keys[tableSize];
 string values[tableSize];
 bool occupied[tableSize] = {false}; // array to track available slots
 
-// implementing a simplified version of DJB2 hash function 
+// implementing a hash function to generate idx 
+  // I'm using sum of the ordinal value of the letters
   // using unsigned because idx keeps being in the negative
 
-unsigned int hashDJB2(string str) { 
-    unsigned int hash = 5381; 
+unsigned int hashing(string str) { 
+    unsigned int hash = 0; 
     for (char c : str) {
-        hash = ((hash << 5) + hash) + c;
+        hash += static_cast<unsigned int>(c); // convert c to ord(c)
     }
-    return hash % tableSize; // to keep idx within tableSize
+    hash = hash % tableSize; // keeping idx within tablesize 
+    return hash; 
 }
 
 // insert function to assign key(state), value(capaital) to idx
 
 bool insert(string key, string value) {
-    int idx = hashDJB2(key);
+    int idx = hashing(key);
     // cout << idx << endl; (checking idx, ignore)
 
     // while idx is already occupied
@@ -54,7 +56,7 @@ bool insert(string key, string value) {
 // look up function to retrieve value from key
 
 string lookup(string key) {
-  int idx = hashDJB2(key);
+  int idx = hashing(key);
   
   // same process as insert, probe up until key found
   while (occupied[idx]) {
@@ -82,7 +84,7 @@ int main() {
   cout << "Enter a state: ";
   string state;
   cin >> state;
-  cout << "The state capital of " << state << " is " << lookup(state) << " !" << endl;
+  cout << "The state capital of " << state << " is " << lookup(state) << "!" << endl;
   cout << "----------------------" << endl;
   
   return 0;
