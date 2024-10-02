@@ -12,7 +12,7 @@ string values[tableSize];
 bool occupied[tableSize] = {false}; // array to track available slots
 
 // implementing a hash function to generate idx 
-  // I'm using sum of the ordinal value of the letters
+  // I'm using sum of the ascii value of the letters
   // using unsigned because idx keeps being in the negative
 
 unsigned int hashing(string str) { 
