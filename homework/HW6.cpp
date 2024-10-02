@@ -23,7 +23,7 @@ int hashing(string str) {
     return hash; 
 }
 
-// insert function to assign state, value pair to idx
+// insert function to assign key, value pair to idx
 
 bool insert(string key, string value) {
     int idx = hashing(key);
