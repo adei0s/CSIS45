@@ -11,38 +11,34 @@ string keys[tableSize];
 string values[tableSize];
 bool occupied[tableSize] = {false}; // array to track available slots
 
-// implementing a hash function to generate idx 
-  // I'm using sum of the ascii value of the letters
-  // using unsigned because idx keeps being in the negative
+// creating a hash function to generate idx 
+// I'm using sum of the ascii value of the letters
 
-unsigned int hashing(string str) { 
-    unsigned int hash = 0; 
+int hashing(string str) { 
+    int hash = 0; 
     for (char c : str) {
-        hash += static_cast<unsigned int>(c); // convert c to ord(c)
+        hash += static_cast<int>(c); // static_cast converts c to ord(c)
     }
     hash = hash % tableSize; // keeping idx within tablesize 
     return hash; 
 }
 
-// insert function to assign key(state), value(capaital) to idx
+// insert function to assign state, value pair to idx
 
 bool insert(string key, string value) {
     int idx = hashing(key);
     // cout << idx << endl; (checking idx, ignore)
-
-    // while idx is already occupied
-    while (occupied[idx]) { 
-      // if this key already exist, update value
-      if (keys[idx] == key) {
+   
+    while (occupied[idx]) {   // collision handling
+      
+      if (keys[idx] == key) {  // if this key already exist, update value
         values[idx] = value;
         return true;
       }
-      // otherwise, try next idx, wrap around if at end of table
-        idx = (idx + 1) % tableSize;
+        idx = (idx + 1) % tableSize;  // if this key already exist, update value
       }
     
-    // if idx available, fill with key/value pair
-    if (occupied[idx] == false) {
+    if (occupied[idx] == false) {   // if this key already exist, update value
       keys[idx] = key;
       values[idx] = value;
       occupied[idx] = true;
@@ -58,14 +54,13 @@ bool insert(string key, string value) {
 string lookup(string key) {
   int idx = hashing(key);
   
-  // same process as insert, probe up until key found
-  while (occupied[idx]) {
+  while (occupied[idx]) {   // same as insert for collision, probe up
     if (keys[idx] == key) {
         return values[idx];
     }
     idx = (idx + 1) % tableSize;
   }
-  return "[Key not found, check typo]";
+  return "[Key not found, check typo]"; 
 }
   
 
@@ -74,13 +69,14 @@ int main() {
   // populate key/value table with data
 
   string states[10] = {"Alaska", "California", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Kansas", "Maine", "Nebraska"};
-  string capitals[10] = {"Juneau", "Sacramento", "Dover", "Tallahassee", "Atlanta", "Honolulu", "Boise", "Boise", "Augusta", "Lincoln"};
+  string capitals[10] = {"Juneau", "Sacramento", "Dover", "Tallahassee", "Atlanta", "Honolulu", "Boise", "Topeka", "Augusta", "Lincoln"};
 
   for (int i=0; i<10; i++) {
     insert(states[i], capitals[i]);
   }
 
-  // prompt user input
+  // Enter state ==> Output capital
+
   cout << "Enter a state: ";
   string state;
   cin >> state;
