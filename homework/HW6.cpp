@@ -80,7 +80,7 @@ int main() {
     insert(states[i], capitals[i]);
   }
 
-  // prompt user imput
+  // prompt user input
   cout << "Enter a state: ";
   string state;
   cin >> state;
