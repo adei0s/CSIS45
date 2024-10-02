@@ -35,10 +35,10 @@ bool insert(string key, string value) {
         values[idx] = value;
         return true;
       }
-        idx = (idx + 1) % tableSize;  // if this key already exist, update value
+        idx = (idx + 1) % tableSize;  // otherwise, try next idx up, wrap around at end of table
       }
     
-    if (occupied[idx] == false) {   // if this key already exist, update value
+    if (occupied[idx] == false) {   // if idx is available, fill with key/value pair
       keys[idx] = key;
       values[idx] = value;
       occupied[idx] = true;
