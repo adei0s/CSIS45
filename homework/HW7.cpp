@@ -68,7 +68,7 @@ void library_duration(int duration[10], int& total) {
 int main() {
     string song_name;
     string artist_name;
-    int total;
+    int total = 0;
     int track;
 
     print(names, artists, duration);
@@ -100,7 +100,7 @@ int main() {
     find_artist(artist_name);
     
     // display total
-    
+
     library_duration(duration, total);
     cout << "Total Library Duration = " << convert_to_minutes(total) << endl;
     cout << endl;
