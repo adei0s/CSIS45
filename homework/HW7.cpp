@@ -57,7 +57,7 @@ void find_artist(string artist) {
     }
 }
 
-// tally song lengths, modify global total var in place
+// tally song lengths
 
 void library_duration(int duration[10], int& total) {
     for (int i=0; i<10; i++) {
