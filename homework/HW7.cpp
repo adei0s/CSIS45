@@ -3,12 +3,6 @@
 #include<string>
 using namespace std;
 
-// create arrays for name, artist, duration (seconds)
-
-string names[10] = {"22", "WAP", "Espresso", "Whole Lotta Money", "Guess", "Taste", "Get Low", "Birds of a Feather", "Not Like Us", "Big Dawgs"};
-string artists[10] = {"Taylor Swift", "Cardi B", "Sabrina Carpenter", "Bia", "Charli XCX", "Tyga", "Lil Jon", "Billie Eilish", "Kendrick Lamar", "Hanumankind"};
-int duration[10] = {232, 187, 175, 156, 143, 232, 334, 210, 273, 190};
-
 // convert to minutes 
 
 string convert_to_minutes(int length) {
@@ -19,19 +13,19 @@ string convert_to_minutes(int length) {
 
 // print library
 
-void print(string arr1[10], string arr2[10], int arr3[10]) {
+void print(string names[], string artists[], int duration[], int size) {
     cout << "Library" << endl << endl;
     cout << "Song | Artist | Duration" << endl << endl;
-    for (int i=0; i<10; i++){
-        cout << arr1[i] << " | " << arr2[i] << " | " << convert_to_minutes(arr3[i]) << endl;
+    for (int i=0; i<size; i++){
+        cout << names[i] << " | " << artists[i] << " | " << convert_to_minutes(duration[i]) << endl;
     }
     cout << endl;
 }
 
 // find_song - takes song name and return index of the song, -1 if nonexist
 
-int find_song(string name) {
-    for (int i=0; i<10; i++) {
+int find_song(string names[], string name, int size) {
+    for (int i=0; i<size; i++) {
         if (names[i] == name) {
             return i;
         }
@@ -41,9 +35,9 @@ int find_song(string name) {
 
 // find artist - takes artist name and print all songs by the artist
 
-void find_artist(string artist) {
+void find_artist(string names[], string artists[], int duration[], string artist, int size) {
     bool found = false;
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<size; i++) {
         if (artists[i] == artist) {
             cout << "Match Found" << endl;
             cout << "Song: " << names[i] << endl;
@@ -59,19 +53,25 @@ void find_artist(string artist) {
 
 // tally song lengths
 
-void library_duration(int duration[10], int& total) {
-    for (int i=0; i<10; i++) {
+void library_duration(int duration[], int& total, int size) {
+    for (int i=0; i<size; i++) {
         total += duration[i];
     }
 }
 
 int main() {
+
+    int size = 10;
+    string names[] = {"22", "WAP", "Espresso", "Whole Lotta Money", "Guess", "Taste", "Get Low", "Birds of a Feather", "Not Like Us", "Big Dawgs"};
+    string artists[] = {"Taylor Swift", "Cardi B", "Sabrina Carpenter", "Bia", "Charli XCX", "Tyga", "Lil Jon", "Billie Eilish", "Kendrick Lamar", "Hanumankind"};
+    int duration[] = {232, 187, 175, 156, 143, 232, 334, 210, 273, 190};
+
+
     string song_name;
     string artist_name;
     int total = 0;
-    int track;
 
-    print(names, artists, duration);
+    print(names, artists, duration, size);
    
    // search by song
 
@@ -79,7 +79,7 @@ int main() {
     cout << "enter song name: ";
     getline(cin, song_name);
 
-    track = find_song(song_name);
+    int track = find_song(names, song_name, size);
     cout << endl;
     if (track == -1) {
         cout << "No " << song_name << " in this library" << endl << endl;
@@ -97,11 +97,11 @@ int main() {
     cout << "enter Artist: ";
     getline(cin, artist_name);
 
-    find_artist(artist_name);
+    find_artist(names, artists, duration, artist_name, size);
     
     // display total
 
-    library_duration(duration, total);
+    library_duration(duration, total, size);
     cout << "Total Library Duration = " << convert_to_minutes(total) << endl;
     cout << endl;
 
