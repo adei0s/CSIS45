@@ -5,7 +5,7 @@ using namespace std;
 
 vector<int> merge(vector<int> left, vector<int> right) {
    
-    vector<int> merged = {};
+    vector<int> merged;
     int idx1 = 0;
     int idx2 = 0;
     
@@ -32,8 +32,7 @@ vector<int> merge(vector<int> left, vector<int> right) {
     return merged;
 }
 
-
-vector<int> sort(vector<int>& nums) {
+vector<int> mergesort(vector<int>& nums) {
     if (nums.size() == 1) {
         return nums;
     }
@@ -42,8 +41,8 @@ vector<int> sort(vector<int>& nums) {
     vector<int> left(nums.begin(), nums.begin() + mid);
     vector<int> right(nums.begin() + mid, nums.end());
 
-    left = sort(left);
-    right = sort(right);
+    left = mergesort(left);
+    right = mergesort(right);
 
     return merge(left, right);
 }
@@ -51,7 +50,7 @@ vector<int> sort(vector<int>& nums) {
 bool two_sum(int arr[], const int size, int target, int result[2]) {
     
     vector<int> nums(arr, arr + size);
-    vector<int> sorted = sort(nums);
+    vector<int> sorted = mergesort(nums);
     
     unordered_set<int> diff;
 
@@ -70,8 +69,8 @@ bool two_sum(int arr[], const int size, int target, int result[2]) {
 
 int main() {
 
-    int arr[] = {5, 1, 2, 3, 4};
-    int target = 6;
+    int arr[] = {7, 2, 11, 15};
+    int target = 9;
     int result[2] = {0, 0};
     
     int size = sizeof(arr) / sizeof(arr[0]);
