@@ -50,7 +50,7 @@ vector<int> mergesort(vector<int>& nums) {
 bool two_sum(int arr[], const int size, int target, int result[2]) {
     
     vector<int> nums(arr, arr + size);
-    vector<int> sorted = mergesort(nums);
+    vector<int> sorted = mergesort(nums); // sorting not necessary for two_sum
     
     unordered_set<int> diff;
 
