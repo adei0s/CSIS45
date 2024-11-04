@@ -38,7 +38,4 @@ int main() {
 
         }
     }
-
-    vector<int> num = {}
-
 }
