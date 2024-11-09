@@ -61,12 +61,12 @@ int main() {
         }
 
         else if (move == 'e') {
-            cout << "Thanks for playing!" << endl;
+            cout << "Thanks for playing!" << endl << endl;
             break;
         }
         
         else {
-            cout << ">> Invalid entry, Use 'w' 'a' 's' 'd' to move, 'e' to exit" << endl;
+            cout << ">> Invalid entry, Try again. " << endl;
         }
 
         grid[snake[0]][snake[1]] = "■";
