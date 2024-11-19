@@ -3,38 +3,46 @@
 #include<string>
 using namespace std;
 
-// void print(vector<vector<string>> grid, int row_size, int col_size) {
-//     string s (col_size + 2, '-');
-//     cout << s << endl;
-//     for (int i=0; i<row_size; i++) {
-//         cout << '|';
-//         for (int j=0; j<col_size; j++) {
-//             cout << grid[i][j]; 
-//         }
-//         cout << '|' << endl;
-//     }
-//     cout << s << endl;
-// }
+// print current grid state
+void print(vector<vector<string>> grid, int row_size, int col_size) {
+    string s (col_size + 2, '-');
+    cout << s << endl;
+    for (int i=0; i<row_size; i++) {
+        cout << '|';
+        for (int j=0; j<col_size; j++) {
+            cout << grid[i][j]; 
+        }
+        cout << '|' << endl;
+    }
+    cout << s << endl;
+}
 
 struct snake {
-    int row_pos;
-    int col_pos; 
+    int x;
+    int y; 
 };
 
 
 int main() {
 
+    // canvas size
     string space = " ";
     int row_size = 4;
     int col_size = 10;
+
+    // player input
     char move;
+
+    // init 1st snake segment
     snake seg1;
-    seg1.row_pos = 2;
-    seg1.col_pos = 3;
+    seg1.x = 2;
+    seg1.y = 3;
 
+    // create grid
     vector<vector<string>> grid (row_size, vector<string> (col_size, space));
-    grid[snake[0]][snake[1]] = "■";
+    grid[seg1.x][seg1.y] = "■";
 
+    // first player input
     cout << ">> Use 'w' 'a' 's' 'd' to move, 'e' to exit" << endl;
     print(grid, row_size, col_size);
     cout << ">> move: ";
@@ -44,27 +52,27 @@ int main() {
 
         cout << ">> Use 'w' 'a' 's' 'd' to move, 'e' to exit" << endl;
  
-        grid[snake[0]][snake[1]] = space; 
+        grid[seg1.x][seg1.y] = space; 
 
         if (move == 'w') {
 
             // wrap around when touching edge
-            snake[0] =  ((snake[0] - 1 + (row_size)) % (row_size));            
+            seg1.x =  ((seg1.x - 1 + (row_size)) % (row_size));            
         }
 
         else if (move == 'a') {
 
-            snake[1] =  ((snake[1] - 2 + (col_size)) % (col_size));   
+            seg1.y =  ((seg1.y - 2 + (col_size)) % (col_size));   
         }
 
         else if (move == 's') {
             
-            snake[0] =  ((snake[0] + 1) % (row_size));           
+            seg1.x =  ((seg1.x + 1) % (row_size));           
         }
 
         else if (move == 'd') {
 
-            snake[1] =  ((snake[1] + 2) % (col_size));
+            seg1.y =  ((seg1.y + 2) % (col_size));
         }
 
         else if (move == 'e') {
@@ -76,7 +84,7 @@ int main() {
             cout << ">> Invalid entry, Try again. " << endl;
         }
 
-        grid[snake[0]][snake[1]] = "■";
+        grid[seg1.x][seg1.y] = "■";
 
         print(grid, row_size, col_size); 
 
