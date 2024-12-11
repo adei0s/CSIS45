@@ -18,45 +18,79 @@ void print(vector<vector<string>> grid, int row_size, int col_size) {
 }
 
 // segment class
-struct Segment {
-    
-    Segment* next;
-    
-    int x;
-    int y;
- 
+class Node {
+    public:
+        int x; 
+        int y;
+        Node* next;  // pointer to the next segment
 };
 
 class Snake {
+    private:
+        Node* head = NULL; // pointer to the first node
+        Node* tail = NULL;
+        
     public:
-
-        Segment head;
-        Segment tail;
-
-        Snake (int start_x, int start_y){
-            head.x = start_x;
-            head.y = start_y;
+        void grow(int x_val, int y_val) {
+            Node* temp = head; 
+            head = new Node; 
+            if (temp == NULL){
+                tail = head;
+            }
+            head->x = x_val; 
+            head->y = y_val;
+            head->next = temp;
+        }
+        
+        void update(vector<vector<string>>& grid, int row_size, int col_size, string space) {
+            for (int i=0; i<row_size; i++) {
+                for (int j=0; j<col_size; j++) {
+                    grid[i][j] = space;
+                }
+            }
+            // for (int i=0; i<3; i++) {
+            //     grid[food[i][1]][food[1][2]] = "O";
+            // }
+            Node* curr = head;
+            while (curr != NULL) {
+                grid[curr->x][curr->y] = "■";
+                cout << curr->x << curr->y << endl;
+                curr = curr->next;
+            }
         }
 
         void move(char dir, int row_size, int col_size) {
-        if (dir == 'w') {
-            head.x =  ((head.x - 1 + (row_size)) % (row_size));            
-        }
+            // savee old head value
+            Node prev = *head;
+            // assign new value to head
+            if (dir == 'w') {
+                head->x = ((head->x - 1 + (row_size)) % (row_size));            
+            }
 
-        else if (dir == 'a') {
-            head.y =  ((head.y - 2 + (col_size)) % (col_size));   
-        }
+            else if (dir == 'a') {
+                head->y = ((head->y - 2 + (col_size)) % (col_size));   
+            }
 
-        else if (dir == 's') {
-            head.x =  ((head.x + 1) % (row_size));           
-        }
+            else if (dir == 's') {
+                head->x = ((head->x + 1) % (row_size));           
+            }
 
-        else if (dir == 'd') {
-            head.y =  ((head.y + 2) % (col_size));
-        }
+            else if (dir == 'd') {
+                head->y = ((head->y + 2) % (col_size));
+            }
 
-        else {
-            cout << ">> Invalid entry, Try again. " << endl;
+            else {
+                cout << ">> Invalid entry, Try again. " << endl;
+            }
+
+            Node* curr = head->next;
+            while (curr != NULL) {
+                Node temp = *curr;
+                curr->x = prev.x;
+                curr->y = prev.y;
+                prev = temp;
+                curr = curr->next;
+            }
         }
 };
 
@@ -65,17 +99,20 @@ int main() {
 
     // canvas size
     string space = " ";
-    int row_size = 4;
-    int col_size = 10;
+    int row_size = 8;
+    int col_size = 20;
+
+    // create grid
+    vector<vector<string>> grid (row_size, vector<string> (col_size, space));
+    // vector<vector<int>> food = {{4, 11}, {7, 19}, {6, 3}};
 
     // player input
     char dir;
 
-    Snake snake(2,3);
+    Snake snake;
+    snake.grow(2,3);
 
-    // create grid
-    vector<vector<string>> grid (row_size, vector<string> (col_size, space));
-    grid[snake.head.x][snake.head.y] = "■";
+    snake.update(grid, row_size, col_size, space);
 
     // first player input
     cout << ">> Use 'w' 'a' 's' 'd' to move, 'e' to exit" << endl;
@@ -92,10 +129,9 @@ int main() {
             break;
         }
 
-        grid[snake.head.x][snake.head.y] = " ";
 
-
-        grid[snake.head.x][snake.head.y] = "■";
+        snake.move(dir, row_size, col_size);
+        snake.update(grid, row_size, col_size, space);
 
         print(grid, row_size, col_size); 
 
