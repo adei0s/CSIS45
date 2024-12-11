@@ -54,13 +54,13 @@ class Snake {
             Node* curr = head;
             while (curr != NULL) {
                 grid[curr->x][curr->y] = "■";
-                cout << curr->x << curr->y << endl;
+                // cout << curr->x << curr->y << endl;
                 curr = curr->next;
             }
         }
 
         void move(char dir, int row_size, int col_size) {
-            // savee old head value
+            // save old head value
             Node prev = *head;
             // assign new value to head
             if (dir == 'w') {
@@ -110,7 +110,12 @@ int main() {
     char dir;
 
     Snake snake;
-    snake.grow(2,3);
+    snake.grow(7,5);
+    snake.grow(7,7);
+    snake.grow(7,9);
+    snake.grow(6,9);
+    snake.grow(5,9);
+
 
     snake.update(grid, row_size, col_size, space);
 
